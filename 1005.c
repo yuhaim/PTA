@@ -2,8 +2,8 @@
 
 int main()
 {
-	int input;
-	int stack[101];
+	char input;
+	int stack[102];
 	int top = 0;
 	int sum = 0;
 
@@ -20,16 +20,14 @@ int main()
 
 	const char *numbers[] = {zero, one, two, three, four, five, six, seven, eight, nine};
 
-	scanf("%d", &input);
-
-	while(input) {
-		stack[++top] = input%10;
-		input = input/10;
+	while(scanf("%c", &input) && input!='\n') {
+		sum += input - '0';
 	}
-
-	while(top) {
-		sum += stack[top--];
-	}
+    
+    if(!sum) {
+        printf("zero");
+        return 0;
+    }
 
 	while(sum) {
 		stack[++top] = sum%10;
