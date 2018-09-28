@@ -57,39 +57,35 @@ int main()
 /* 你的代码将被嵌在这里 */
 void PreorderTraversal( BinTree BT )
 {
-   while(BT) {
-      printf("%d ", BT->Data);
-      PreorderTraversal(BT->Left); 
-      PreorderTraversal(BT->Right); 
-   }
+    if(BT) {
+        printf("%d ", BT->Data);
+        PreorderTraversal(BT->Left); 
+        PreorderTraversal(BT->Right); 
+    }
 } 
 
 void InorderTraversal( BinTree BT )
 {
-   while(BT) {
-      InorderTraversal(BT->Left); 
-      printf("%d ", BT->Data);
-      InorderTraversal(BT->Right); 
-   }
+    if(BT) {
+        InorderTraversal(BT->Left); 
+        printf("%d ", BT->Data);
+        InorderTraversal(BT->Right); 
+    }
 } 
 
 BinTree Insert( BinTree BST, ElementType X )
 {
-    while(BST) {
-        if(X>BST->Data) {
-            BST->Right = Insert(BST->Right, X);
-        } else if (X<BST->Data) {
-            BST->Left = Insert(BST->Left, X);
-        } else {
-            return BST;
-        }
-    }
-
     if(!BST) {
         BST = (Position)malloc(sizeof(struct TNode));
         BST->Data = X;
         BST->Left = NULL;
         BST->Right = NULL; printf("%d INsert\n", X);
+    } else {
+        if(X>BST->Data) {
+            BST->Right = Insert(BST->Right, X);
+        } else if (X<BST->Data) {
+            BST->Left = Insert(BST->Left, X);
+        }
     }
 
     return BST;
@@ -100,9 +96,7 @@ BinTree Delete( BinTree BST, ElementType X )
     Position temp;
     if(!BST) {
         printf("Not Found\n");
-    }
-    
-    while(BST) {
+    } else {
         if(X>BST->Data) {
             BST->Right = Delete(BST->Right, X);
         } else if(X<BST->Data) {
@@ -118,13 +112,13 @@ BinTree Delete( BinTree BST, ElementType X )
                 Delete(BST->Right, temp->Data);
             }
         }
-    }   
-    return BST; 
+    }
+    return BST;
 }
 
 Position Find( BinTree BST, ElementType X )
 {
-    while(BST) {
+    if(BST) {
         if(X>BST->Data) {
             Find(BST->Right, X);
         } else if (X<BST->Data) {
@@ -133,7 +127,7 @@ Position Find( BinTree BST, ElementType X )
             return BST;
         }
     }
-    return BST;   
+    return BST;
 }
 
 Position FindMin( BinTree BST )
@@ -145,7 +139,7 @@ Position FindMin( BinTree BST )
 }
 
 Position FindMax( BinTree BST )
-{   
+{
     while(BST && BST->Right) {
         BST = BST->Right;
     }
