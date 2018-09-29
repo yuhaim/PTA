@@ -29,6 +29,26 @@ void destroyPoly(Poly p)
     }
 }
 
+void printPoly(Poly p)
+{
+    int entry = 1;
+    if(!p) {
+        printf("Empty Polynomial\n");
+        return;
+    }
+
+    while(p->next) {
+        if(!entry) {
+            printf(" ");
+        }
+        entry = 0;
+        printf("%d %d", p->next->coeff, p->next->order);
+        p = p->next;
+    }
+
+    printf("\n");
+}
+
 void appendTerm(Poly p, int coeff, int order)
 {
     Term term = p;
@@ -47,6 +67,7 @@ void appendTerm(Poly p, int coeff, int order)
 void addPoly(Poly p1, Poly p2, Poly pSum)
 {
     Term temp;
+    int coeff;
 
     if(!p1 || !p2) { 
         return;
@@ -60,7 +81,10 @@ void addPoly(Poly p1, Poly p2, Poly pSum)
             appendTerm(pSum, p2->next->coeff, p2->next->order);
             p2 = p2->next;
         } else {
-            appendTerm(pSum, p1->next->coeff + p2->next->coeff, p1->next->order);
+            coeff = p1->next->coeff + p2->next->coeff;
+            if(coeff) {
+                appendTerm(pSum, coeff, p1->next->order);
+            }
             p1 = p1->next;
             p2 = p2->next;
         }
@@ -76,7 +100,7 @@ void addPoly(Poly p1, Poly p2, Poly pSum)
 
 void multiPoly(Poly p1, Poly p2, Poly pMulti)
 {
-    Poly term, poly, multi, sum;
+    Poly term, poly, multi, sum1 = NULL, sum2 = NULL, temp;
     if(!(p1&&p2)) {
         return;
     }
@@ -84,35 +108,41 @@ void multiPoly(Poly p1, Poly p2, Poly pMulti)
     while(p1->next) {
         term = p1->next;
         poly = p2;
-        //sum = pMulti;
+        
+        if(!sum1) {
+            sum1 = createPoly();
+        }
+
+        if(!sum2) {
+            sum2 = createPoly();
+        }
+
         multi = createPoly();
         while(poly->next) {
-            appendPoly(multi, poly->next->coeff*term.coeff, poly->next->order*term.order);
-            poly = ploy->next;
+            appendTerm(multi, poly->next->coeff*term->coeff, poly->next->order + term->order);
+            poly = poly->next;
         }
-        addPoly(pMulti, multi, )
-    }
 
-    if(temp)
-}
-
-void printPoly(Poly p)
-{
-    int entry = 1;
-    if(!p) {
-        return;
-    }
-
-    while(p->next) {
-        if(!entry) {
-            printf(" ");
+        if(!sum1->next) {
+            addPoly(sum2, multi, sum1);
+            destroyPoly(sum2); 
+            sum2 = NULL;
+        } else {
+            addPoly(sum1, multi, sum2);
+            destroyPoly(sum1);
+            sum1 = NULL;
         }
-        entry = 0;
-        printf("%d %d", p->next->coeff, p->next->order);
-        p = p->next;
-    }
 
-    printf("\n");
+        destroyPoly(multi);
+        p1 = p1->next;
+    }
+    
+    temp = sum1 ? sum1 : sum2;
+    while(temp->next) {
+        appendTerm(pMulti, temp->next->coeff, temp->next->order);
+        temp = temp->next;
+    }
+    destroyPoly(temp);
 }
 
 int main()
@@ -132,16 +162,17 @@ int main()
         appendTerm(p1, currCoeff, currOrder);            
         N1--;
     }
-    printPoly(p1);//
+
     scanf("%d", &N2);
     while(N2){
         scanf("%d %d", &currCoeff, &currOrder);
         appendTerm(p2, currCoeff, currOrder);            
         N2--;
     }
-    printPoly(p2);//
+
+    multiPoly(p1, p2, pMulti);
+    printPoly(pMulti);
     addPoly(p1, p2, pSum);
     printPoly(pSum);
-
     return 0;
 }
