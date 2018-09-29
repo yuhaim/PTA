@@ -79,7 +79,7 @@ BinTree Insert( BinTree BST, ElementType X )
         BST = (Position)malloc(sizeof(struct TNode));
         BST->Data = X;
         BST->Left = NULL;
-        BST->Right = NULL; printf("%d INsert\n", X);
+        BST->Right = NULL; 
     } else {
         if(X>BST->Data) {
             BST->Right = Insert(BST->Right, X);
@@ -103,11 +103,11 @@ BinTree Delete( BinTree BST, ElementType X )
             BST->Left = Delete(BST->Left, X);
         } else {
             if(!BST->Left || !BST->Right) {
-                temp = BST->Left ? BST->Right : BST->Left;   
+                temp = BST->Left ? BST->Left : BST->Right;   
                 free(BST);
                 return temp; 
             } else {
-                temp = FindMax(BST->Right);
+                temp = FindMin(BST->Right);
                 BST->Data = temp->Data;
                 Delete(BST->Right, temp->Data);
             }
@@ -120,9 +120,9 @@ Position Find( BinTree BST, ElementType X )
 {
     if(BST) {
         if(X>BST->Data) {
-            Find(BST->Right, X);
+            BST = Find(BST->Right, X);
         } else if (X<BST->Data) {
-            Find(BST->Left, X);
+            BST = Find(BST->Left, X);
         } else {
             return BST;
         }
