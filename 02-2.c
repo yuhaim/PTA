@@ -33,41 +33,41 @@ void printPoly(Poly p)
 {
     int entry = 1;
     if(!p) {
-        printf("Empty Polynomial\n");
+        printf("Invalid Polynomial\n");
         return;
     }
 
-    while(p->next) {
-        if(!entry) {
-            printf(" ");
+    if(!p->next) {
+        printf("0 0");
+    } else {
+        while(p->next) {
+            if(!entry) {
+                printf(" ");
+            }
+            entry = 0;
+            printf("%d %d", p->next->coeff, p->next->order);
+            p = p->next;
         }
-        entry = 0;
-        printf("%d %d", p->next->coeff, p->next->order);
-        p = p->next;
     }
-
     printf("\n");
 }
 
 void appendTerm(Poly p, int coeff, int order)
 {
-    Term term = p;
-
-    if(term) {
-        while(term->next){
-            term = term->next;
+    if(p && coeff) {
+        while(p->next){
+            p = p->next;
         }
-        term->next = (Term)malloc(sizeof(struct Node));
-        term->next->coeff = coeff;
-        term->next->order = order;
-        term->next->next = NULL;
+        p->next = (Term)malloc(sizeof(struct Node));
+        p->next->coeff = coeff;
+        p->next->order = order;
+        p->next->next = NULL;
     }
 }
 
 void addPoly(Poly p1, Poly p2, Poly pSum)
 {
     Term temp;
-    int coeff;
 
     if(!p1 || !p2) { 
         return;
@@ -81,10 +81,7 @@ void addPoly(Poly p1, Poly p2, Poly pSum)
             appendTerm(pSum, p2->next->coeff, p2->next->order);
             p2 = p2->next;
         } else {
-            coeff = p1->next->coeff + p2->next->coeff;
-            if(coeff) {
-                appendTerm(pSum, coeff, p1->next->order);
-            }
+            appendTerm(pSum, p1->next->coeff + p2->next->coeff, p1->next->order);
             p1 = p1->next;
             p2 = p2->next;
         }
@@ -101,7 +98,7 @@ void addPoly(Poly p1, Poly p2, Poly pSum)
 void multiPoly(Poly p1, Poly p2, Poly pMulti)
 {
     Poly term, poly, multi, sum1 = NULL, sum2 = NULL, temp;
-    if(!(p1&&p2)) {
+    if(!p1 || !p2 || !p1->next || !p2->next) {
         return;
     }
     
