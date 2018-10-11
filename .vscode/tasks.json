@@ -11,7 +11,7 @@
                 // Ask msbuild to generate full paths for file names.
                 "-Wall",
                 "-g",
-                "04-7.c"
+                "03-2.c"
             ]
         }
     ]
