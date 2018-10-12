@@ -8,6 +8,8 @@ int setFind(int x)
         return x;
     else
         set[x] = setFind(set[x]);
+
+    return set[x]; 
 }
 
 void unionSet()
@@ -47,12 +49,12 @@ void checkSet()
 
 void printSet(int N)
 {
-    int count;
+    int count = 0;
     while(N--) {
         if(set[N+1]<0) count++;
     }
 
-    if(count) {
+    if(count>1) {
         printf("There are %d components.\n", count);
     } else {
         printf("The network is connected.\n");
