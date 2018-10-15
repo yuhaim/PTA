@@ -78,8 +78,11 @@ int main()
         if(!flagPre && flag) {
             printf(" }\n");
             spaceCtrl = 0;
+            flagPre = 0;
+        } else {
+            flagPre = flag;
         }
-        flagPre = flag;
+
         if(!visited[i]) {
             flag = 1;
             printf("{ ");
@@ -102,8 +105,11 @@ int main()
         if(!flagPre && flag) {
             printf(" }\n");
             spaceCtrl = 0;
+            flagPre = 0;
+        } else {
+            flagPre = flag;
         }
-        flagPre = flag;
+        
         if(!visited[i]) {
             flag = 1;
             printf("{ ");
