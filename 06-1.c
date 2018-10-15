@@ -44,9 +44,10 @@ void BFS(int *graph, int N, int v, int *visited)
         }
         printf("%d", w);
         for(i=0; i<N; i++) {
-            if(graph[w*N+i]) {
+            if(graph[w*N+i] && !visited[i]) {
                 rear = (1+rear)%(N+1);
-                queue[rear] = w;
+                queue[rear] = i;
+                visited[i] = 1;
             }
         }
     }
@@ -75,13 +76,13 @@ int main()
     
     for(i=0; i<N; i++) {
         if(!flagPre && flag) {
-            printf("}\n");
+            printf(" }\n");
             spaceCtrl = 0;
         }
         flagPre = flag;
         if(!visited[i]) {
             flag = 1;
-            printf("{");
+            printf("{ ");
             DFS(graph, N, i, visited);
         } else {
             flag = 0;
@@ -89,7 +90,7 @@ int main()
     }
     
     if(flag == 1)
-        printf("}\n");
+        printf(" }\n");
 
     flag = flagPre = 0;
     spaceCtrl = 0;
@@ -99,13 +100,13 @@ int main()
     
     for(i=0; i<N; i++) {
         if(!flagPre && flag) {
-            printf("}\n");
+            printf(" }\n");
             spaceCtrl = 0;
         }
         flagPre = flag;
         if(!visited[i]) {
             flag = 1;
-            printf("{");
+            printf("{ ");
             BFS(graph, N, i, visited);
         } else {
             flag = 0;
@@ -113,7 +114,7 @@ int main()
     }
     
     if(flag == 1)
-        printf("}\n");
+        printf(" }\n");
 
     free(visited);
     free(graph);
