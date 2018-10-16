@@ -12,8 +12,8 @@ void clear(int i)
 {
     if(tree[i].x) {
         tree[i].visited = 0;
-        clear(i/2);
-        clear(i/2+1);
+        clear(i*2);
+        clear(i*2+1);
     }
 
     return;
@@ -24,8 +24,8 @@ void reset(int i)
     if(tree[i].x) {
         tree[i].x = 0;
         tree[i].visited = 0;
-        clear(i/2);
-        clear(i/2+1);
+        clear(i*2);
+        clear(i*2+1);
     }
 
     return;
@@ -54,9 +54,9 @@ int compare(int x, int i)
     int result = 0;
     if(tree[i].visited) {
         if(x>tree[i].x) {
-            result = compare(x, i/2 + 1);
+            result = compare(x, i*2 + 1);
         } else if(x<tree[i].x) {
-            result = compare(x, i/2);
+            result = compare(x, i*2);
         } else {
             tree[i].visited = 1;
             result = 1;
@@ -84,6 +84,9 @@ int main()
             scanf("%d", &x);
             if(x!=tree[1].x) {
                 result = 0;
+                for(j=1; j<N; j++) {
+                    scanf("%d", &x);
+                }
             } else {
                 result = 1;
                 tree[1].visited = 1;
