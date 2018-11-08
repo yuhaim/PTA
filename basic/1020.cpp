@@ -6,8 +6,8 @@
 using namespace std;
 
 struct Pie{
-    int weight;
-    int total;
+    double weight;
+    double total;
 };
 
 struct Rule {
@@ -22,19 +22,19 @@ int main()
     int N, D;
     cin>>N>>D;
 
-    vector<int> weight, total;
+    vector<double> weight(N), total(N);
     multiset<Pie, Rule> storage;
     
     for(int i=0; i<N; i++) {
-        int x;
+        double x;
         cin>>x;
-        weight.push_back(x);
+        weight[i] = x;
     }
 
     for(int i=0; i<N; i++) {
-        int x;
+        double x;
         cin>>x;
-        total.push_back(x);
+        total[i] = x;
     }
 
     for(int i=0; i<N; i++) {

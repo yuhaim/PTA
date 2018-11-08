@@ -22,9 +22,14 @@ int main()
         }
     }
 
+    if(top<0) {
+        printf("1\n");
+        return 0;
+    }
+
     qsort(stack, top, sizeof(int), compare);
 
-    for(i=1; i<top; i++)
+    for(i=1; i<=top; i++)
     {
         if(stack[i-1] == stack[i]) {
             stack[i-1] = 0;
@@ -38,6 +43,11 @@ int main()
         base++;
     }
 
+    if(base>top) {
+        printf("1\n");
+        return 0;
+    }
+
     for(i=base; i<=top; i++) {
         if(stack[i]>i+1-base) {
             printf("%d\n", i+1-base);
@@ -45,7 +55,7 @@ int main()
         }
     }
 
-    printf("%d\n", i-base);
+    printf("%d\n", i+1-base);
     return 0;
 }
 
