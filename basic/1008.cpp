@@ -16,6 +16,7 @@ int main()
     }
 
     bool init = true;
+    M = M%N;
     for(int i=N-M; i<2*N-M; i++) {
         if(init)
             init = false;

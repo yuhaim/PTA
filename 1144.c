@@ -27,7 +27,7 @@ int main()
         return 0;
     }
 
-    qsort(stack, top, sizeof(int), compare);
+    qsort(stack, top+1, sizeof(int), compare);
 
     for(i=1; i<=top; i++)
     {
@@ -36,7 +36,7 @@ int main()
         }
     }
 
-    qsort(stack, top, sizeof(int), compare);
+    qsort(stack, top+1, sizeof(int), compare);
 
     base=0;
     while(!stack[base]) {

@@ -33,40 +33,47 @@ int main()
     char day;
     char hour;
 
-    set<char> day_set;
-    set<char> hour_set;
-    for(auto ch : s1) {
-        if(isday(ch))
-            day_set.insert(ch);
-        if(ishour(ch))
-            hour_set.insert(ch);
-    }
+    //set<char> day_set;
+    //set<char> hour_set;
+    //for(auto ch : s1) {
+    //    if(isday(ch))
+    //        day_set.insert(ch);
+    //}
 
     int i;
     for(i=0; i<s2.length(); i++) {
         while(!isday(s2[i])) i++;
 
-        if(day_set.find(s2[i])!=day_set.end()){
+        //if(day_set.find(s2[i])!=day_set.end()){
+        if(s2[i]==s1[i]){
             day = s2[i];
             break;
         }
     }
-    
+
+   // for(auto ch : s1.substr(s1.find(day))) {
+   //     if(ishour(ch))
+   //         hour_set.insert(ch);
+   // }
+
     for(i++; i<s2.length(); i++) {
         while(!ishour(s2[i])) i++;
 
-        if(hour_set.find(s2[i])!=hour_set.end())
+        //if(hour_set.find(s2[i])!=hour_set.end())
+        if(s2[i]==s1[i]) {
             hour = s2[i];
+            break;
+        }
     }
 
     cout<<week[day-'A']<<" ";
     int hour_digit;
-    if(hour>='0'&&hour<='9')
+    if(isdigit(hour))
         hour_digit = hour-'0';
     else
         hour_digit = hour-'A'+10;
 
-    cout<<hour_digit<<":";
+    printf("%02d:", hour_digit);
 
     int len = s3.length()>s4.length() ? s4.length() : s3.length();
     for(int i=0; i<len; i++) {

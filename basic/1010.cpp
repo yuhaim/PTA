@@ -6,8 +6,8 @@ using namespace std;
 istream &operator>>(istream &in, vector<pair<int, int> > &poly)
 {
     int coeff, expon;
-    in>>coeff>>expon;
-    poly.push_back(make_pair(coeff, expon));
+    if(in>>coeff>>expon)
+        poly.push_back(make_pair(coeff, expon));
     return in;
 }
 
@@ -26,17 +26,22 @@ int main()
     while(cin>>poly);
     
     bool init = true;
+    bool output = false;
     for(auto item : poly) {
         if(init)
             init = false;
-        else if(item.first*item.second)
+        else if(item.second)
             cout<<' ';
         else
             ;
 
+        if(item.second)
+            output = true;
         cout<<item;
     }
 
+    if(!output)
+        cout<<"0 0";
     cout<<endl;
     return 0;
 }

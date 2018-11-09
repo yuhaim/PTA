@@ -10,6 +10,7 @@ int main()
     int A1 = 0;
     int A2 = 0;
     int A2_sign = 1;
+    bool A2_flag = false;
     int A3 = 0;
     int A4_sum = 0;
     int A4_count = 0;
@@ -24,6 +25,7 @@ int main()
 
         if(x%5==1) {
             A2 += A2_sign*x;
+            A2_flag = true;
             A2_sign *= -1;
         }
 
@@ -46,7 +48,7 @@ int main()
     else
         cout<<'N';
 
-    if(A2)
+    if(A2_flag)
         cout<<' '<<A2;
     else
         cout<<" N";

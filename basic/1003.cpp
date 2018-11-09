@@ -14,19 +14,35 @@ bool valid(string s)
     for(; i<s.length() && s[i]=='A'; i++)
         prefix+=s[i];
 
-    if(i+2<=s.length()-1 && s.substr(i,3)=="PAT")
-        i+=3;
-    else if(i+3<=s.length()-1 && s.substr(i,4)=="PAAT")
-        i+=4;
+    if(i<=s.length()-1 && s[i]=='P')
+        i++;
+    else
+        return false;
+
+    int i_prev = i;
+    while(i<=s.length()-1 && s[i]=='A')
+        i++;
+
+    if(i<=i_prev)
+        return false;
+
+    int central_count = i - i_prev - 1;
+
+    if(i<=s.length()-1 && s[i]=='T')
+        i++;
     else
         return false;
 
     for(; i<s.length() && s[i]=='A'; i++)
         postfix+=s[i];
 
-    if((postfix.length() == prefix.length()) || 
-       (postfix.length() == 2*prefix.length()))
+    if(prefix.length()==0 && postfix.length()==0)
         return true;
+    else {
+        int post_count = postfix.length()/prefix.length()-1;
+        if(central_count == post_count)
+        return true;
+    }
 
     return false;
 }
