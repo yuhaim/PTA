@@ -6,7 +6,8 @@ using namespace std;
 int data[100001];
 int main()
 {
-    int N, p;
+    int N;
+    long long p;
     cin>>N>>p;
 
     for(int i=0; i<N; i++){
@@ -17,14 +18,14 @@ int main()
 
     sort(data, data+N);
     int max_count = 0;
-    for(int i=0; i<N; i++) {
+    for(int i=0; i+max_count<N; i++) {
         int index;
-        for(index=N-1; index>=i; index--) {
-            if(data[index]<=data[i]*p)
+        for(index=i+max_count; index<N; index++) {
+            if(data[index]>data[i]*p)
                 break;
         }
 
-        int count = index - i + 1;
+        int count = index - i;
         if(count>max_count)
             max_count = count;
     }
