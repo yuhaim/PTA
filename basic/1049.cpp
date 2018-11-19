@@ -10,8 +10,8 @@ int main()
     
     double sum = 0.0;
     for(int i=0; i<N; i++) {
-        float x;
-        scanf("%f", &x);
+        double x;
+        scanf("%lf", &x);
         sum += x*(i+1)*(N-i);
     }
 
