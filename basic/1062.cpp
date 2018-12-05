@@ -19,6 +19,12 @@ int main()
 	int EN1 = N1*M2*K;
 	int EN2 = N2*M1*K;
 
+	if (EN1 > EN2) {
+		int temp = EN1;
+		EN1 = EN2;
+		EN2 = temp;
+	}
+
 	bool init = true;
 	for (int i = 1; i < 1001; i++) {
 		int EN = i * M1* M2;
