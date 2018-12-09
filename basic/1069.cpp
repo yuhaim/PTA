@@ -17,13 +17,13 @@ int main()
 		cin >> s;
 		auto result = record.find(s);
 		if (result != record.end()) {
-			skip = true;
+			S++;
 			continue;
-		}else if (skip || (i>=S && (i - S) % N == 0 )) {
+		}else if (i==S) {
 			cout << s << endl;
 			record.insert(s);
 			count++;
-			skip = false;
+			S += N;
 		}
 	}
 	

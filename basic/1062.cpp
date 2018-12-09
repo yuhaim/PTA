@@ -16,19 +16,17 @@ int main()
 	int N1, M1, N2, M2, K;
 	scanf("%d/%d %d/%d %d", &N1, &M1, &N2, &M2, &K);
 
-	int EN1 = N1*M2*K;
-	int EN2 = N2*M1*K;
+	int EN1 = N1*M2;
+	int EN2 = N2*M1;
 
-	if (EN1 > EN2) {
-		int temp = EN1;
-		EN1 = EN2;
-		EN2 = temp;
+	if(EN1 > EN2){
+		swap(N1, N2);
+		swap(M1, M2);
 	}
 
 	bool init = true;
-	for (int i = 1; i < 1001; i++) {
-		int EN = i * M1* M2;
-		if (EN > EN1 && EN < EN2 && gcd(i, K) == 1) {
+	for (int i = 1; i*M2 < K*N2; i++) {
+		if (i*M1 > K*N1 && gcd(i, K) == 1) {
 			if (init)
 				init = false;
 			else

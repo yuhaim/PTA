@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void compare(int x, int y)
+void compare(int x, double y)
 {
 	if(x>y)
 		cout << " Gai";
@@ -17,16 +17,16 @@ int main()
 {
 	int M, X, Y;
 	cin >> M >> X >> Y;
-	int A, B, C;
+	int A, B;
+	double C;
 	
 	for(A=99; A>9; A--){
 		int P = A/10;
 		int Q = A%10;
 		B = 10*Q + P;
-		if(abs(A-B)%X || B%Y)
-			continue;
-		if(abs(A-B)/X == B/Y){
-			C = B/Y;
+
+		if(fabs(abs(A-B)/(double)X - B/(double)Y)<1e-5){
+			C = B/(double)Y;
 			break;
 		}
 	}

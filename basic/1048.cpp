@@ -8,13 +8,13 @@ int main()
 	string A, B;
 	cin >> A >> B;
 	string digits = "0123456789JQK";
-	for(int i=0; i<B.length()-A.length(); i++){
+	for(int i=0; i<(int)B.length()- (int)A.length(); i++){
 		cout << B[i];
 	}
 
 	for(int i=0; i<A.length(); i++) {
 		int order = A.length() - i;
-		int index = i + B.length()-A.length();
+		int index = i + (int)B.length()-(int)A.length();
 		if(index<0) continue;
 		if(order%2){
 			cout << digits[(A[i]-'0' + B[index]-'0')%13];
