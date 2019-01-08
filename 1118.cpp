@@ -8,7 +8,7 @@ using namespace std;
 int main()
 {
 #ifndef ONLINE_JUDGE
-	freopen("D:\\PTA\\1118.txt", "r", stdin);
+	freopen("..\\..\\PTA\\1118.txt", "r", stdin);
 #endif
 
 	int N;
@@ -43,7 +43,7 @@ int main()
 	for(int i=0; i<Q; i++){
 		int p, q;
 		cin >> p >> q;
-		if(m[p]==m[q])
+		if(m.find(p)!=m.end() && m.find(q)!=m.end() && m[p]==m[q])
 			cout << "Yes" << endl;
 		else
 			cout << "No" << endl;
