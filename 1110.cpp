@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdio>
-#include <queue>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -11,17 +11,32 @@ struct Node {
 	int right;
 };
 
+int max_index;
+int max_node;
+void dfs(int root, int index, const vector<Node> &tree)
+{
+	if(root == -1)
+		return;
+	if(index > max_index){
+		max_index = index;
+		max_node = root;
+	}
+	dfs(tree[root].left, 2*index, tree);
+	dfs(tree[root].right, 2*index+1, tree);
+}
+
 int main()
 {
 #ifndef ONLINE_JUDGE
-	freopen("..\\..\\PTA\\1110.txt", "r", stdin);
+	freopen("D:\\PTA\\1110.txt", "r", stdin);
 #endif
 
 	int N;
 	cin >> N;
 
 	int root = -1;
-	vector<Node> tree(N, {-1,-1,-1});
+	Node init_node = {-1, -1, -1};
+	vector<Node> tree(N, init_node);
 	for (int i = 0; i < N; i++) {
 		string s1, s2;
 		cin >> s1 >> s2;
@@ -40,7 +55,11 @@ int main()
 		}
 	}
 
-
+	dfs(root, 1, tree);
+	if(max_index == N)
+		cout << "YES " << max_node << endl;
+	else
+		cout << "NO " << root << endl;
 
 	return 0;
 }
