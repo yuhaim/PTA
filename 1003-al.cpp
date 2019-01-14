@@ -1,11 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <cstdio>
-#include <algorithm>
 #include <climits>
 
 using namespace std;
-int graph[500][500];
+
 int main()
 {
 #ifndef ONLINE_JUDGE
@@ -19,12 +18,12 @@ int main()
 	for(int i=0; i<N; i++)
 		cin >> v_weight[i];
 
-	fill(graph[0], graph[0]+500*500, INT_MAX); // 
+	vector<vector<pair<int, int>>> graph(N);
 	for(int i=0; i<M; i++){
 		int u, v, w;
 		cin >> u >> v >> w;
-		graph[u][v] = w;
-		graph[v][u] = w;
+		graph[u].push_back(make_pair(v, w));
+		graph[v].push_back(make_pair(u, w));
 	}
 
 	vector<int> dist(N, INT_MAX);
@@ -33,11 +32,12 @@ int main()
 	vector<int> sum_weight(N, 0);
 
 	dist[C1] = 0;
-	//visited[C1] = true;
+	//included[C1] = true; // init in relaxation
 	num_route[C1] = 1;
 	sum_weight[C1] = v_weight[C1];
 
-	for(int i=0; i<N; i++){
+	//for(int i=0; i<N; i++){
+	for( ; ; ){ // possibly not connected
 		int u = -1, d_min = INT_MAX;
 		for(int j=0; j<N; j++){
 			if(included[j]==false && dist[j]<d_min){
@@ -46,19 +46,21 @@ int main()
 			}
 		}
 
-		//if(u == -1) break;
+		if(u == -1) break; // possibly not connected
 		included[u] = true;
 
-		for(int j=0; j<N; j++){
-			if(graph[u][j]<INT_MAX && included[j]==false){
-				if(dist[j] > dist[u] + graph[u][j]){
-					dist[j] = dist[u] + graph[u][j];
-					num_route[j] = num_route[u];
-					sum_weight[j] = sum_weight[u] + v_weight[j];
-				} else if(dist[j] == dist[u] + graph[u][j]){
-					num_route[j] += num_route[u];
-					if(sum_weight[j] < sum_weight[u] + v_weight[j]){
-						sum_weight[j] = sum_weight[u] + v_weight[j];
+		for(int j=0; j<graph[u].size(); j++){
+			int index = graph[u][j].first;
+			int weight = graph[u][j].second;
+			if(included[index]==false){
+				if(dist[index] > dist[u] + weight){
+					dist[index] = dist[u] + weight;
+					num_route[index] = num_route[u];
+					sum_weight[index] = sum_weight[u] + v_weight[index];
+				} else if(dist[index] == dist[u] + weight){
+					num_route[index] += num_route[u];
+					if(sum_weight[index] < sum_weight[u] + v_weight[index]){
+						sum_weight[index] = sum_weight[u] + v_weight[index];
 					}
 				}
 			}
