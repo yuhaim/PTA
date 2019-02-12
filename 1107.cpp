@@ -2,21 +2,25 @@
 #include <cstdio>
 #include <unordered_map>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 int Find(int x, vector<int> &p)
 {
-	return p[x] >= 0 ? p[x] = Find(p[x], p) : x;
+	return p[x] >= 0 ? (p[x] = Find(p[x], p)) : x;
 }
 
 void Union(int x, int y, vector<int> &p)
 {
 	int p1 = Find(x, p);
 	int p2 = Find(y, p);
+
+	if(p1==p2) return;
+
 	if(p[p1]<=p[p2]){
 		p[p1] = p[p1] + p[p2];
 		p[p2] = p1;
-	} else {
+	} else if(p[p1]>p[p2]) {
 		p[p2] = p[p1] + p[p2];
 		p[p1] = p2;
 	}
@@ -52,5 +56,11 @@ int main()
 		}
 	}
 
+	sort(cluster.begin(), cluster.end(), greater<int>());
+	cout << cluster.size() << endl;
+	cout << cluster[0];
+	for(int i=1; i<cluster.size(); i++){
+		cout << ' ' << cluster[i];
+	}
 	return 0;
 }
